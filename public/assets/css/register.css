@@ -26,7 +26,6 @@
   z-index: -1;
 }
 
-.floated-label-wrapper label input[type=text],
 .floated-label-wrapper label input[type=email],
 .floated-label-wrapper label input[type=password] {
   border-radius: 4px;

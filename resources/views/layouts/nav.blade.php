@@ -29,7 +29,7 @@
       <aside>Ahmad Alif Robit Alhazmi : 081511633038</aside>
     </footer>
 
-    <script src="js/jquery.js"></script>
+    <script src="js/jquery-3.2.1.js"></script>
     <script src="js/what-input.js"></script>
     <script src="js/foundation.js"></script>
     <script src="js/app.js"></script>
