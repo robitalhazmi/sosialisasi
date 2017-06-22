@@ -41,7 +41,7 @@ class RegisterController extends Controller
               if($data == 0){
                   /*Mail::send('email', ['token'=>$user->password], function($send) use($email)  {
                       $send->to($email)->subject('Verifikasi alamat email yang telah didaftarkan');
-                      $send->from('the.enumeration@gmail.com', 'Pendaftaran Enumeration');
+                      $send->from('ahmad.alif.robit-2015@fst.unair.ac.id', 'Pendaftaran Unair SOS');
                   });*/
 
                   $user->save();
@@ -56,6 +56,20 @@ class RegisterController extends Controller
           }
       }else{
           return response()->json(['success'=>false, 'message'=>'Invalid post Data']);
+      }
+  }
+  public function konfirmasi_email(Request $req){
+      $user = User::where('password', $req->input('token'))->first();
+      if($user!=null){
+          if($user->status == 0){
+              User::where('password', $req->input('token'))->update(['status' => 1]);
+              // return response()->json(['success'=>true, 'message'=>'Email confirmation success!']);
+              return redirect()->route('dashboard');
+          }else{
+              return response()->json(['success'=>false, 'message'=>'Expired token!']);
+          }
+      }else{
+          return response()->json(['success'=>false, 'message'=>'Invalid token confirmation']);
       }
   }
 }

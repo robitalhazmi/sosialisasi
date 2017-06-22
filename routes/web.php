@@ -14,6 +14,7 @@
   //getPage
   Route::get('/', ['as' =>  'landing', 'uses' =>  'LandingController@landingPage']);
   Route::get('register', ['as'  =>  'login', 'uses' =>  'RegisterController@registerPage']);
+  Route::get('confirm', 'RegisterController@konfirmasi_email');
   Route::get('login', ['as' => 'login', 'uses' => 'AuthController@loginPage']);
 
 
