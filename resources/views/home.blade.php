@@ -15,7 +15,7 @@
     <div id="hero">
       <div>
         <a href="register">Sign Up</a>
-        <a href="#">Login</a>
+        <a href="login">Login</a>
       </div>
     </div>
     <img src="./assets/img/landing/unair.jpg" alt="Unair Kampus C.">

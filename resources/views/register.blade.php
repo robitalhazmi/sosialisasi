@@ -6,8 +6,7 @@
 
 @section('link')
   <link rel="stylesheet" href="css/foundation.css">
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="assets/css/register.css">
+  <link rel="stylesheet" href="assets/css/form.css">
 @endsection
 
 @section('main')
@@ -32,6 +31,6 @@
 @endsection
 
 @section('script')
-  <script src="assets/js/register.js"></script>
+  <script src="assets/js/form.js"></script>
   <script type="text/javascript" src="assets/js/api-json.js"></script>
 @endsection

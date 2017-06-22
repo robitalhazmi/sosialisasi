@@ -46,19 +46,4 @@ $(document).ready(function() {
 		    }
 	  	});
 	});
-
-	$('#talkshow_button').on('submit', function (e) {
-		e.preventDefault();
-		$.ajax({
-		    type: 'post',
-		    url: 'addEvent',
-		    xhrFields: {
-                withCredentials: true
-          	},
-		    data: $('#talkshow_button').serialize(),
-		    success: function (data,status,xhr) {
-	    		location.href = 'dashboard';
-		    }
-	  	});
-	});
 });

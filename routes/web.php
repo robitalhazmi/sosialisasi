@@ -16,7 +16,10 @@
   Route::get('register', ['as'  =>  'login', 'uses' =>  'RegisterController@registerPage']);
   Route::get('confirm', 'RegisterController@konfirmasi_email');
   Route::get('login', ['as' => 'login', 'uses' => 'AuthController@loginPage']);
-
-
   //postData
   Route::post('register', 'RegisterController@postRegister');
+  Route::post('login', 'AuthController@postLogin');
+//private
+  Route::group(['middleware' => ['web']], function () {
+  //getPagw
+  });

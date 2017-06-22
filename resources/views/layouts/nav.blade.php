@@ -18,7 +18,7 @@
           <a href="/">Home</a>
           <a href="/#splash">About</a>
           <a href="register">Sign Up</a>
-          <a href="#">Login</a>
+          <a href="login">Login</a>
         </div>
       </nav>
 
@@ -32,7 +32,6 @@
     <script src="js/jquery-3.2.1.js"></script>
     <script src="js/what-input.js"></script>
     <script src="js/foundation.js"></script>
-    <script src="js/app.js"></script>
     <script src="assets/js/footer.js"></script>
 
     @yield('script')
