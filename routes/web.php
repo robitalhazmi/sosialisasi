@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+//public
+  //getPage
+  Route::get('/', ['as' =>  'landing', 'uses' =>  'LandingController@landingPage']);
+  Route::get('register', ['as'  =>  'login', 'uses' =>  'RegisterController@registerPage']);

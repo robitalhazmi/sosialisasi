@@ -1,0 +1,70 @@
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust:     100%;
+}
+
+body {
+    background-color: #FFF;
+    margin: 0;
+}
+body {
+    color: #404040;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+}
+a {
+  color: #212121;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #F01C0F;
+}
+
+nav#main {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8em;
+}
+
+nav#main div a {
+  margin: 0 1em;
+}
+
+.colophon {
+    padding: 2em;
+    background: hsl(0, 0%, 10%);
+    color: white;
+    text-align: center;
+
+    clear: both;
+    position: relative;
+    z-index: 10;
+}
+
+@media screen and (min-width: 600px) {
+    /* Layout with CSS Grid */
+    @supports (display: grid) {
+
+        /* Four-column layout. Two center columns have a total max width of 50em: */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr repeat(2, minmax(auto, 25em)) 1fr;
+        }
+
+        /* Use automatic grid placement + span to let each item span two columns:*/
+        .colophon aside {
+            grid-column: span 2;
+        }
+
+    }
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
