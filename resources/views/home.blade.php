@@ -6,6 +6,7 @@
 
 @section('link')
   <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="stylesheet" href="assets/css/home.processed.css">
 @endsection
 
 @section('main')
@@ -14,8 +15,16 @@
     <h2 class="site-title">Unair Socialization for Schools</h2>
     <div id="hero">
       <div>
-        <a href="register">Sign Up</a>
-        <a href="login">Login</a>
+        @if(Auth::check())
+          @if(Auth::user()->email == 'robitalhazmi@gmail.com')
+            <a href="dashboard">Admin Panel</a>
+          @else
+            <a href="dashboard">Dashboard</a>
+          @endif
+        @else
+          <a href="signup">Sign Up</a>
+          <a href="login">Login</a>
+        @endif
       </div>
     </div>
     <img src="./assets/img/landing/unair.jpg" alt="Unair Kampus C.">
@@ -56,5 +65,40 @@
         </li>
       </ul>
     </section><!-- .buckets -->
+
+    <section class="more grid" id="schedule">
+    <div class="more-content">
+      <h2 class="content-title">Sosialisasi tahun ini</h2>
+      <table>
+      	<tr>
+      		<th>Id</th>
+      		<th>Date</th>
+      		<th>Activity</th>
+      		<th>Contact Person</th>
+      		<th>Location</th>
+      		<th>Officer</th>
+      	</tr>
+      		@foreach ($agenda as $agendaValue)
+      			<tr>
+      					<td>{{ $agendaValue->id }}</td>
+      					<td>{{ $agendaValue->tanggal }}</td>
+      					<td>{{ $agendaValue->kegiatan }}</td>
+      					<td>{{ $agendaValue->kontak }}</td>
+      					<td>{{ $agendaValue->lokasi }}</td>
+      					<td>
+      						@foreach ($sosialisasi as $sos)
+      							@if ($sos->agendas_id == $agendaValue->id)
+      								{{$sos->nama}}
+      								<br>
+      							@endif
+      						@endforeach
+      					</td>
+      					</td>
+      			</tr>
+      		@endforeach
+      	</table>
+    </div><!-- .more-content -->
+  </section><!-- .more -->
+
   </main>
 @endsection

@@ -15,10 +15,20 @@
       <nav id="main">
         <div>Unair SOS</div>
          <div>
-          <a href="/">Home</a>
-          <a href="/#splash">About</a>
-          <a href="register">Sign Up</a>
-          <a href="login">Login</a>
+           <a href="/">Home</a>
+           <a href="/#splash">About</a>
+           <a href="/#schedule">Schedule</a>
+           @if(Auth::check())
+             @if(Auth::user()->email == 'robitalhazmi@gmail.com')
+               <a href="dashboard">Admin Panel</a>
+             @else
+               <a href="dashboard">Dashboard</a>
+             @endif
+             <a href="logout">Log Out</a>
+           @else
+             <a href="signup">Sign Up</a>
+             <a href="login">Login</a>
+           @endif
         </div>
       </nav>
 

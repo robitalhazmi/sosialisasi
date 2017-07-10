@@ -1,99 +1,213 @@
--- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2017-06-21 03:19:09.84
+-- phpMyAdmin SQL Dump
+-- version 4.5.1
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jul 07, 2017 at 08:35 AM
+-- Server version: 10.1.19-MariaDB
+-- PHP Version: 7.0.13
 
--- tables
--- Table: agendas
-CREATE TABLE agendas (
-    id int NOT NULL,
-    tanggal int NOT NULL,
-    kegiatan text NOT NULL,
-    kontak varchar(13) NOT NULL,
-    petugas_id int NOT NULL,
-    kotas_id int NOT NULL,
-    CONSTRAINT agendas_pk PRIMARY KEY (id)
-);
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
--- Table: jabatans
-CREATE TABLE jabatans (
-    id int NOT NULL AUTO_INCREMENT,
-    nama varchar(7) NOT NULL,
-    CONSTRAINT jabatans_pk PRIMARY KEY (id)
-);
 
--- Table: kotas
-CREATE TABLE kotas (
-    id int NOT NULL AUTO_INCREMENT,
-    nama varchar(22) NOT NULL,
-    provinsis_id int NOT NULL,
-    CONSTRAINT kotas_pk PRIMARY KEY (id)
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
--- Table: laporans
-CREATE TABLE laporans (
-    id int NOT NULL AUTO_INCREMENT,
-    detail text NOT NULL,
-    kendala text NOT NULL,
-    dokumen text NOT NULL,
-    agendas_id int NOT NULL,
-    CONSTRAINT laporans_pk PRIMARY KEY (id)
-);
+--
+-- Database: `unairsos`
+--
 
--- Table: petugass
-CREATE TABLE petugass (
-    id int NOT NULL AUTO_INCREMENT,
-    nama text NOT NULL,
-    telepon varchar(13) NOT NULL,
-    gender varchar(6) NOT NULL,
-    tgl_lahir date NOT NULL,
-    berkas text NULL,
-    users_id int NOT NULL,
-    jabatans_id int NOT NULL,
-    CONSTRAINT petugass_pk PRIMARY KEY (id)
-);
+-- --------------------------------------------------------
 
--- Table: provinsis
-CREATE TABLE provinsis (
-    id int NOT NULL AUTO_INCREMENT,
-    nama varchar(28) NOT NULL,
-    CONSTRAINT provinsis_pk PRIMARY KEY (id)
-);
+--
+-- Table structure for table `agendas`
+--
 
--- Table: users
-CREATE TABLE users (
-    id int NOT NULL AUTO_INCREMENT,
-    email varchar(320) NOT NULL,
-    password text NOT NULL,
-    status bool NOT NULL,
-    created_at timestamp NOT NULL,
-    updated_at timestamp NOT NULL,
-    remember_token varchar(100) NULL,
-    CONSTRAINT users_pk PRIMARY KEY (id)
-);
+CREATE TABLE `agendas` (
+  `id` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `kegiatan` text NOT NULL,
+  `kontak` varchar(15) NOT NULL,
+  `lokasi` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- foreign keys
--- Reference: agendas_kotas (table: agendas)
-ALTER TABLE agendas ADD CONSTRAINT agendas_kotas FOREIGN KEY agendas_kotas (kotas_id)
-    REFERENCES kotas (id);
+--
+-- Dumping data for table `agendas`
+--
 
--- Reference: agendas_petugas (table: agendas)
-ALTER TABLE agendas ADD CONSTRAINT agendas_petugas FOREIGN KEY agendas_petugas (petugas_id)
-    REFERENCES petugass (id);
+INSERT INTO `agendas` (`id`, `tanggal`, `kegiatan`, `kontak`, `lokasi`) VALUES
+(1, '2017-12-21', 'Sosialisasi PMB', '+6281252823952', 'SMA Darul Ulum 2'),
+(2, '2017-08-02', 'Sosialisasi UKT', '+628123456789', 'Universitas Airlangga');
 
--- Reference: kotas_provinsis (table: kotas)
-ALTER TABLE kotas ADD CONSTRAINT kotas_provinsis FOREIGN KEY kotas_provinsis (provinsis_id)
-    REFERENCES provinsis (id);
+-- --------------------------------------------------------
 
--- Reference: laporans_agendas (table: laporans)
-ALTER TABLE laporans ADD CONSTRAINT laporans_agendas FOREIGN KEY laporans_agendas (agendas_id)
-    REFERENCES agendas (id);
+--
+-- Table structure for table `laporans`
+--
 
--- Reference: petugas_jabatans (table: petugass)
-ALTER TABLE petugass ADD CONSTRAINT petugas_jabatans FOREIGN KEY petugas_jabatans (jabatans_id)
-    REFERENCES jabatans (id);
+CREATE TABLE `laporans` (
+  `id` int(11) NOT NULL,
+  `detail` text NOT NULL,
+  `kendala` text NOT NULL,
+  `dokumen` text NOT NULL,
+  `agendas_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Reference: petugas_users (table: petugass)
-ALTER TABLE petugass ADD CONSTRAINT petugas_users FOREIGN KEY petugas_users (users_id)
-    REFERENCES users (id);
+-- --------------------------------------------------------
 
--- End of file.
+--
+-- Table structure for table `petugas`
+--
 
+CREATE TABLE `petugas` (
+  `id` int(11) NOT NULL,
+  `nama` text,
+  `telepon` varchar(15) DEFAULT NULL,
+  `gender` varchar(6) DEFAULT NULL,
+  `tgl_lahir` date DEFAULT NULL,
+  `berkas` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `petugas`
+--
+
+INSERT INTO `petugas` (`id`, `nama`, `telepon`, `gender`, `tgl_lahir`, `berkas`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL),
+(2, 'Ahmad Alif Robit', '+6281252823952', 'Male', '1998-03-27', NULL),
+(3, 'Binti Lathifatul', '+628123456789', 'Female', '1998-02-21', NULL),
+(4, 'Adib Aulia', '+6281252823952', 'Male', '1998-03-27', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sosialisasis`
+--
+
+CREATE TABLE `sosialisasis` (
+  `id` int(11) NOT NULL,
+  `agendas_id` int(11) NOT NULL,
+  `petugas_id` int(11) NOT NULL,
+  `jabatan` varchar(7) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `email` varchar(320) NOT NULL,
+  `password` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `remember_token` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password`, `created_at`, `updated_at`, `remember_token`) VALUES
+(1, 'robitalhazmi@gmail.com', '$2y$10$pgNpwkeTVzK1iM8ekQ3v4.kqVnh7Gm0bwEoMAFjo9xcksdFCbq/oO', '2017-07-07 03:03:52', '2017-07-05 09:40:32', 'ToyNNqAhps26478lP1dOh5HFxh3ZuaTsjEn4mF2wMILvFuKqhqS29hnxYwSV'),
+(2, 'cobaemail@gmail.com', '$2y$10$J4mWojhmAjBR35LwrUlqQOJhPk9cQbLvngMMg0nlJAxO0gcaoHG.i', '2017-07-06 08:30:20', '2017-07-05 09:40:57', 'yP0kMR6m9vd7oReqS5mkPV0vl0MgzgGaVEcURiWOTnKFGyPmQIxDOt3esK6w'),
+(3, 'email@gmail.com', '$2y$10$HBOBVWo7fAN5u8J5sXilHuxEu8.pd3HIKl4EAyfjF.WqZtaABAJt.', '2017-07-05 16:42:05', '2017-07-05 09:41:34', 'yFrs2NTPksiFTLHTcFwYO1BnJ5cMD16eDOCahBLU4hessp4B1Xp1Eeg46NZP'),
+(4, 'adibaulia@gmail.com', '$2y$10$Bpshj0EGM2uFQVNaZqM0NeX97DihMRdNu.4/ZcP/rqteKkSm.YmiK', '2017-07-06 03:10:27', '2017-07-05 20:09:29', 'aSEeKpUrM9luxMGiDliLac2V1eSVcIapUrMUOXz6LCy0d0PnND7o4SWYAzft');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `agendas`
+--
+ALTER TABLE `agendas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laporans`
+--
+ALTER TABLE `laporans`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `laporans_agendas` (`agendas_id`);
+
+--
+-- Indexes for table `petugas`
+--
+ALTER TABLE `petugas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sosialisasis`
+--
+ALTER TABLE `sosialisasis`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sosialisasi_agendas` (`agendas_id`),
+  ADD KEY `sosialisasi_petugas` (`petugas_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `agendas`
+--
+ALTER TABLE `agendas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `laporans`
+--
+ALTER TABLE `laporans`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `petugas`
+--
+ALTER TABLE `petugas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `sosialisasis`
+--
+ALTER TABLE `sosialisasis`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `laporans`
+--
+ALTER TABLE `laporans`
+  ADD CONSTRAINT `laporans_agendas` FOREIGN KEY (`agendas_id`) REFERENCES `agendas` (`id`);
+
+--
+-- Constraints for table `petugas`
+--
+ALTER TABLE `petugas`
+  ADD CONSTRAINT `petugas_users` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `sosialisasis`
+--
+ALTER TABLE `sosialisasis`
+  ADD CONSTRAINT `sosialisasi_agendas` FOREIGN KEY (`agendas_id`) REFERENCES `agendas` (`id`),
+  ADD CONSTRAINT `sosialisasi_petugas` FOREIGN KEY (`petugas_id`) REFERENCES `petugas` (`id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -11,7 +11,7 @@
 
 @section('main')
     <div class="row column medium-6 large-5 align-center" id="login">
-      <form class="callout text-center" method="post" id="login_form">
+      <form class="callout text-center" action="login" method="post" id="login_form" >
         <h2>Login</h2>
         <div class="floated-label-wrapper">
           <label for="email">Email</label>
@@ -21,12 +21,11 @@
           <label for="pass">Password</label>
           <input type="password" id="password" name="password" placeholder="Password">
         </div>
-        <input class="button expanded" type="submit" value="Sign up">
+        <input class="button expanded" type="submit" value="Login">
       </form>
     </div>
 @endsection
 
 @section('script')
   <script src="assets/js/form.js"></script>
-  <script type="text/javascript" src="assets/js/api-json.js"></script>
 @endsection

@@ -80,6 +80,10 @@ hr  {
     padding: 1.5em;
 }
 
+.more {
+	padding: 2em;
+}
+
 /*--------------------------------------------------------------
 Use flex to create a three-bucket layout
 --------------------------------------------------------------*/
@@ -116,6 +120,7 @@ CSS Grid layout for wider screens, when browser supports grid:
 
         /* Center items by placing them in the two center columns: */
         .splash-content,
+        .more-content,
         .buckets ul {
             grid-column: 2/4;
         }
@@ -126,7 +131,7 @@ CSS Grid layout for wider screens, when browser supports grid:
 
 #hero {
   width: 100%;
-  height: 235px;
+  height: 215px;
   font-size: 2em;
   justify-content: center;
   align-items: center;
