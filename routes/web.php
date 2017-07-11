@@ -18,9 +18,7 @@ Route::get('logout', 'LoginController@logout');
 Route::get('dashboard', 'DashboardController@dashboard');
 Route::get('profile', 'DashboardController@profile');
 Route::get('agenda', 'DashboardController@agenda');
-//Route::get('map', 'DashboardController@map');
-
-
+Route::get('map', 'DashboardController@map');
 //postData
 Route::post('signup', 'SignUpController@postSignUp');
 Route::post('login', 'LoginController@postLogin');

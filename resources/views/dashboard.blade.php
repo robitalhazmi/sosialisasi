@@ -27,31 +27,32 @@
 
 		<main role="main">
 				<section class="panel important">
-						<h2>Welcome to Your Dashboard </h2>
+						<h2>Selamat Datang di Halaman Dashboard Anda</h2>
 						<ul>
-								<li>Important panel that will always be really wide Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-								<li>Aliquam tincidunt mauris eu risus.</li>
-								<li>Vestibulum auctor dapibus neque.</li>
+								<li>Lihat daftar agenda sosialisasi anda.</li>
+								<li>Unggah laporan hasil sosialisasi.</li>
+								<li>Masukkan biodata diri anda</li>
 						</ul>
 				</section>
 				<section class="panel">
-						<h2>Agendas</h2>
+						<h2>Agenda</h2>
 						<ul>
-								<li><b>2458 </b>Agendas</li>
+								<li><b>{{ $jumlah }} </b>Agendas</li>
 								<li>Coming soon agenda: <b>This is an agenda date</b>.</li>
 						</ul>
 				</section>
 				<section class="panel">
-						<h2>More Stats</h2>
+						<h2>Biodata</h2>
 						<ul>
-								<li>Lorem ipsum dolor sit amet, consectetuer adipiscing.</li>
-								<li>Aliquam tincidunt mauris eu risus.</li>
-								<li>Vestibulum auctor dapibus neque.</li>
+								<li>Nama &emsp;&emsp;&emsp;&emsp;: {{ $bio['nama'] }}</li>
+								<li>Telepon&emsp;&emsp; &emsp;: {{ $bio['telepon'] }}</li>
+								<li>Gender&emsp; &emsp; &emsp;: {{ $bio['gender'] }}</li>
+								<li>Tanggal lahir&emsp;: {{ $bio['tgl_lahir'] }}</li>
 						</ul>
 				</section>
 
 				<section class="panel important">
-						<h2>Your Schedule</h2>
+						<h2>Agenda Anda</h2>
 						<table>
 								<tr>
 										<th>Id</th>
@@ -83,16 +84,6 @@
 													<div class="reveal" id="report-{{ $sos->agendas_id }}" data-reveal>
 														<h1>Upload Report</h1>
 
-														@if ($errors->any())
-    													<div class="alert alert-danger">
-        												<ul>
-            										@foreach ($errors->all() as $error)
-                									<li>{{ $error }}</li>
-            										@endforeach
-	        											</ul>
-    													</div>
-														@endif
-
 														<form action="laporan" method="post" enctype="multipart/form-data">
 															<input type="hidden" name="agendas_id" value="{{ $sos->agendas_id }}">
 															<label>Detail Activity
@@ -100,7 +91,7 @@
 															<label>Kendala
 															<textarea name="kendala" rows="8" cols="80"></textarea>
 															<label>Upload Document
-															<input type="file" name="laporans[]" multiple>
+															<input type="file" name="laporan" multiple>
 														</label>
 															<input type="submit" class="button" value="Submit">
 														</form>
@@ -108,8 +99,9 @@
 																<span aria-hidden="true">&times;</span>
 														</button>
 													</div>
-
-													<p><button id="button_id" class="button" data-open="report-{{ $sos->agendas_id }}" value="">Upload report</button></p>
+													@if ($sos->jabatan	==	'ketua')
+														<p><button id="button_id" class="button" data-open="report-{{ $sos->agendas_id }}" value="">Upload report</button></p>
+													@endif
 												</td>
 										</tr>
 									@endif

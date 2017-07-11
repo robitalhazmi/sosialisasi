@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Agenda extends Model
+class Laporan extends Model
 {
   protected $fillable = [
 	'id', 'detail', 'kendala', 'dokumen', 'agendas_id'

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\ReportRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Agenda;
 use App\Petugas;
@@ -30,7 +30,17 @@ class DashboardController extends Controller
                                  ->select('*')
                                  ->get();
 
-      return view('dashboard', compact('sosialisasi'));
+      $jumlah  = Sosialisasi::join('agendas', 'sosialisasis.agendas_id', '=', 'agendas.id')
+                                 ->join('petugas', 'sosialisasis.petugas_id', '=', 'petugas.id')
+                                 ->where('sosialisasis.petugas_id', '=', Auth::user()->id)
+                                 ->count();
+
+      $biodata = Petugas::where('id', Auth::user()->id)->first();
+      $bio['nama']  = $biodata->nama;
+      $bio['telepon']  = $biodata->telepon;
+      $bio['gender']  = $biodata->gender;
+      $bio['tgl_lahir']  = $biodata->tgl_lahir;
+      return view('dashboard', compact('sosialisasi', 'bio'))->with('jumlah', $jumlah);
     }
   }
 
@@ -62,7 +72,9 @@ class DashboardController extends Controller
       return redirect('logout');
     }
     else {
-      $agenda  = Agenda::get();
+      $agenda  = Agenda::leftJoin('laporans', 'agendas.id', '=', 'laporans.agendas_id')
+                       ->select('agendas.id', 'agendas.tanggal', 'agendas.kegiatan', 'agendas.kontak', 'agendas.lokasi', 'laporans.id as laporan_id', 'laporans.detail', 'laporans.kendala', 'laporans.dokumen', 'laporans.agendas_id')
+                       ->get();
       $petugas  = Petugas::where('id', '!=', 1)->get();
 
       $sosialisasi  = Sosialisasi::join('petugas', 'sosialisasis.petugas_id', '=', 'petugas.id')
@@ -70,6 +82,20 @@ class DashboardController extends Controller
                                  ->get();
 
       return view('agenda', compact('agenda', 'sosialisasi', 'petugas'));
+    }
+  }
+
+  public function report()
+  {
+    if (Auth::user()->email !=  'robitalhazmi@gmail.com') {
+      return redirect('logout');
+    }
+    else {
+      $laporan  = Laporan::join('agendas', 'laporans.agendas_id', '=', 'agendas.id')
+                         ->select('agendas.id', 'agendas.tanggal', 'agendas.kegiatan', 'agendas.kontak', 'agendas.lokasi', 'laporans.id as laporan_id', 'laporans.detail', 'laporans.kendala', 'laporans.dokumen', 'laporans.agendas_id')
+                         ->get();
+
+      return view('report', compact('agenda, laporan'));
     }
   }
 
@@ -116,15 +142,27 @@ class DashboardController extends Controller
 
   public function postLaporan(Request $req)
   {
-    foreach ($req->laporans as $laporan) {
-      $filename = $laporan->store('laporan');
-      Laporan::create([
-        'detail' => $laporan->detail,
-        'kendala' =>  $laporan->kendala,
-        'dokumen' => $filename,
-        'agendas_id'  =>  $laporan->agendas_id
-      ]);
+    if ($req->hasFile('laporan')) {
+      $filename = $req->agendas_id.'.jpg';
+      $req->file('laporan')->storeAs('public', $filename);
+      $insert = new Laporan;
+
+      $insert->detail = $req->detail;
+      $insert->kendala = $req->kendala;
+      $insert->dokumen = $filename;
+      $insert->agendas_id = $req->agendas_id;
+
+      $insert->save();
+
+      return redirect('dashboard');
+
     }
     return redirect('dashboard');
+  }
+
+  public function download(Request $req)
+  {
+    $path = Storage::url('laporan/'.$req->dokumen);
+    return response()->download($path);
   }
 }

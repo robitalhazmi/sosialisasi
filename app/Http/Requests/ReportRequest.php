@@ -26,7 +26,7 @@ class ReportRequest extends FormRequest
         return [
           'name'  =>  'required',
           'kendala' =>  'required',
-          'laporan' =>  'application|mimes:doc|size:50000'
+          'laporan' =>  'application|mimes:doc,docx|size:50000'
         ];
     }
 }

@@ -21,7 +21,7 @@
 		<nav role="navigation">
         <ul class="main">
             <li class="write"><a href="dashboard">Add Agenda</a></li>
-            <li class="edit"><a href="agenda">Agenda</a></li>
+            <li class="agenda"><a href="agenda">Agenda</a></li>
         </ul>
 		</nav>
 
