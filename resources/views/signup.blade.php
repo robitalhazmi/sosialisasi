@@ -21,6 +21,11 @@
           <label for="pass">Password</label>
           <input type="password" id="password" name="password" placeholder="Password">
         </div>
+        @if (session('status'))
+          <div class="alert alert-success">
+            {{ session('status') }}
+          </div>
+        @endif
         <input class="button expanded" type="submit" value="Sign up">
       </form>
     </div>

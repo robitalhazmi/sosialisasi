@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
 use App\Petugas;
 use Hash;
 
@@ -11,7 +12,12 @@ class SignUpController extends Controller
 {
   public function signUp()
   {
-    return view('signup');
+    if(!Auth::check()){
+      return view('signup');
+    }
+    else{
+        return redirect('dashboard');
+    }
   }
 
   public function postSignUp(Request $req)
@@ -19,15 +25,22 @@ class SignUpController extends Controller
     $email  = $req->email;
     $password = $req->password;
 
-    $insert = new User;
-    $insertProfile = new Petugas;
+    $data_login = User::where('email', $email)->first();
 
-    $insert->email  = $email;
-    $insert->password = Hash::make($password);
+    if ($data_login == null) {
+      $insert = new User;
+      $insertProfile = new Petugas;
 
-    $insert->save();
-    $insertProfile->save();
+      $insert->email  = $email;
+      $insert->password = Hash::make($password);
 
-    return redirect('login');
+      $insert->save();
+      $insertProfile->save();
+
+      return redirect()->intended('dashboard');
+    }
+    else {
+      return redirect('signup')->with('status', 'Email already have taken!');
+    }
   }
 }

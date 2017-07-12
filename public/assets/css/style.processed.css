@@ -121,6 +121,10 @@ nav[role=navigation] .dashboard a:before {
   content: "\f0e4";
 }
 
+nav[role=navigation] .edit a:before {
+  content: "\f007";
+}
+
 nav[role=navigation] .write a:before {
   content: "\f055";
 }

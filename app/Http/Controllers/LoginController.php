@@ -9,7 +9,12 @@ class LoginController extends Controller
 {
   public function login()
   {
-    return view('login');
+    if(!Auth::check()){
+        return view('login');
+    }
+    else{
+        return redirect('dashboard');
+    }
   }
 
   public function postLogin(Request $req)
@@ -17,12 +22,13 @@ class LoginController extends Controller
     $email = $req->email;
     $password = $req->password;
 
-    if (Auth::attempt(['email'  =>  $email, 'password'  =>  $password])) {
-      return redirect()->intended('/');
-    }
-    else {
-      return view('login');
-    }
+
+      if (Auth::attempt(['email'  =>  $email, 'password'  =>  $password])) {
+        return redirect()->intended('/');
+      }
+      else {
+        return redirect('login');
+      }
   }
 
   public function logout()
